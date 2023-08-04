@@ -1,8 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import BookDetailsPage from "./components/bookDetailsPage";
-import "./App.css";
-import Homepage from "./components/Homepage";
+import BookDetailsPage from "./pages/bookDetailsPage";
+import Homepage from "./pages/Homepage";
 import { ThemeProvider, createTheme } from "@mui/material";
 
 const App = () => {

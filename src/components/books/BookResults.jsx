@@ -9,40 +9,49 @@ import {
   Typography,
 } from "@mui/material";
 import * as React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate } from "react-router-dom";
 
-export default function BookResults({ data, setData, loading }) {
+export default function BookResults({ data, setData, loading, setPage, page }) {
   const navigate = useNavigate();
 
+  // Show the loader while loading
+  if (loading) {
+    return (
+      <Grid container justifyContent="center">
+        <CircularProgress />
+      </Grid>
+    );
+  }
+
+  // Show the book results
   return (
-    <>
-      <Grid container spacing={3}>
-        {!loading && data?.items && (
-          <Grid item md={12}>
-            <Typography>Found: {data?.totalItems} books</Typography>
-          </Grid>
-        )}
-        {loading ? (
-          <Grid
-            item
-            md={12}
-            style={{
-              textAlign: "center",
-            }}
-          >
-            <CircularProgress />
-          </Grid>
-        ) : (
-          <></>
-        )}
-        {!loading &&
-          data?.items?.map((item, index) => (
-            <Grid key={index} item md={4}>
+    <Grid container spacing={3}>
+      {data?.items?.length > 0 && (
+        <Grid item md={12}>
+          <Typography fontSize="25px" textAlign="center">
+            Found: {data.totalItems} books
+          </Typography>
+        </Grid>
+      )}
+      <InfiniteScroll
+        dataLength={data?.items?.length ? data?.items?.length : 0} //This is important field to render the next data
+        next={() => setPage((prev) => prev + 1)}
+        hasMore={true}
+        loader={<h4>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+      >
+        <Grid container spacing={3}>
+          {data?.items?.map((item, index) => (
+            <Grid key={index} item md={3}>
               <Card sx={{ maxWidth: 345, maxHeight: 400, minHeight: 400 }}>
                 <CardMedia
                   sx={{ height: 140 }}
-                  image={item?.volumeInfo?.imageLinks?.thumbnail}
-                  title="green iguana"
+                  image={item?.volumeInfo?.imageLinks?.thumbnail || "No Image"}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -70,7 +79,8 @@ export default function BookResults({ data, setData, loading }) {
               </Card>
             </Grid>
           ))}
-      </Grid>
-    </>
+        </Grid>
+      </InfiniteScroll>
+    </Grid>
   );
 }
