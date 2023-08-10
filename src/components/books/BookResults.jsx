@@ -38,7 +38,6 @@ export default function BookResults({ data, setData, loading, setPage, page }) {
         dataLength={data?.items?.length ? data?.items?.length : 0} //This is important field to render the next data
         next={() => setPage((prev) => prev + 1)}
         hasMore={true}
-        loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
             <b>Yay! You have seen it all</b>

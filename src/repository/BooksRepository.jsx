@@ -1,4 +1,3 @@
-import { GOOGLE_BOOKS_API_KEY } from "../config";
 import api from "./api";
 
 export const BookRepository = {
@@ -8,7 +7,6 @@ export const BookRepository = {
         q: data.q,
         startIndex: data.startIndex,
         maxResults: data.maxResults,
-        // key: GOOGLE_BOOKS_API_KEY,
       },
     });
   },
