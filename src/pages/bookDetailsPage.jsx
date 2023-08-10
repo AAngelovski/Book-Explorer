@@ -68,7 +68,7 @@ const BookDetailsPage = () => {
           <Typography
             gutterBottom
             variant="h2"
-            stlye={{ color: "white", border: "10px solid black" }}
+            style={{ color: "white", border: "10px solid black" }}
           >
             {bookDetails?.volumeInfo?.title || "Title not available"}
           </Typography>
