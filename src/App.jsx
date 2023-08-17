@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import BookDetailsPage from "./pages/bookDetailsPage";
 import Homepage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
+import UserPage from "./pages/userPage";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { gapi } from "gapi-script";
 const clientId =
@@ -43,17 +44,11 @@ const App = () => {
     },
   });
 
-  const [accessToken, setAccessToken] = useState(null);
-
-  const handleLoginSuccess = (token) => {
-    setAccessToken(token);
-  };
-
   useEffect(() => {
     function start() {
       gapi.client.init({
         clientId: clientId,
-        scope: "",
+        scope: "https://www.googleapis.com/auth/books",
       });
     }
     gapi.load("client:auth2", start);
@@ -63,19 +58,9 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Routes>
-          <Route
-            path="/"
-            element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
-          ></Route>
-          <Route
-            path="/homepage"
-            element={
-              <Homepage
-                accessToken={accessToken}
-                onLoginSuccess={handleLoginSuccess}
-              />
-            }
-          />
+          <Route path="/" element={<LoginPage />}></Route>
+          <Route path="/homepage" element={<Homepage />} />
+          <Route path="/user" element={<UserPage />} />
           <Route path="/book/:bookId" element={<BookDetailsPage />} />
         </Routes>
       </div>

@@ -11,8 +11,16 @@ import {
 import * as React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate } from "react-router-dom";
+import AddToFavoritesButton from "./AddToFavouritesBtn";
+import AddToWishlistButton from "./AddToWishlistBtn";
 
-export default function BookResults({ data, setData, loading, setPage, page }) {
+export default function BookResults({
+  data,
+  setData,
+  loading,
+  setPage,
+  accessToken,
+}) {
   const navigate = useNavigate();
 
   // Show the loader while loading
@@ -29,8 +37,8 @@ export default function BookResults({ data, setData, loading, setPage, page }) {
     <Grid container spacing={3}>
       {data?.items?.length > 0 && (
         <Grid item md={12}>
-          <Typography fontSize="25px" textAlign="center">
-            Found: {data.totalItems} books
+          <Typography fontSize="25px" textAlign="center" color={"primary"}>
+            Found {data.totalItems} Books
           </Typography>
         </Grid>
       )}
@@ -38,11 +46,6 @@ export default function BookResults({ data, setData, loading, setPage, page }) {
         dataLength={data?.items?.length ? data?.items?.length : 0} //This is important field to render the next data
         next={() => setPage((prev) => prev + 1)}
         hasMore={true}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
-          </p>
-        }
       >
         <Grid container spacing={3}>
           {data?.items?.map((item, index) => (
@@ -65,15 +68,26 @@ export default function BookResults({ data, setData, loading, setPage, page }) {
                       : "No description available"}
                   </Typography>
                 </CardContent>
-                <CardActions style={{ textAlign: "right" }}>
+                <CardActions>
                   <Button
-                    size="small"
+                    sx={{ color: "orange" }}
                     onClick={() => {
                       navigate(`/book/${item?.id}`);
                     }}
                   >
                     Learn More
                   </Button>
+                </CardActions>
+
+                <CardActions>
+                  <AddToFavoritesButton
+                    bookId={item?.id}
+                    accessToken={accessToken}
+                  />
+                  <AddToWishlistButton
+                    bookId={item?.id}
+                    accessToken={accessToken}
+                  />
                 </CardActions>
               </Card>
             </Grid>

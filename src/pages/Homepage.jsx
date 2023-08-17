@@ -1,32 +1,16 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useContext } from "react";
 import { Container, Grid } from "@mui/material";
 import Header from "../components/common/Header";
 import BookResults from "../components/books/BookResults";
-import Login from "../components/Auth/Login";
-import Logout from "../components/Auth/Logout";
-import axios from "axios";
-import FavouritesPage from "./FavouritesPage";
+import { TokenContext } from "../contexts/token.context";
+import { useNavigate } from "react-router-dom";
 
-const Homepage = ({ accessToken, onLoginSuccess }) => {
+const Homepage = () => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
-
-  const fetchBookshelves = async () => {
-    try {
-      const response = await axios.get(
-        "https://www.googleapis.com/books/v1/mylibrary/bookshelves",
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log("Fetched bookshelevs:", response.data);
-    } catch (error) {
-      console.log(" ERRRROR ", error);
-    }
-  };
+  const { accessToken } = useContext(TokenContext);
+  const navigate = useNavigate();
 
   return (
     <Fragment>
@@ -39,30 +23,15 @@ const Homepage = ({ accessToken, onLoginSuccess }) => {
         setPage={setPage}
       ></Header>
 
-      <Container style={{ marginTop: "50px" }}>
-        <br></br>
+      <Container style={{ marginTop: "70px" }}>
         <Grid container>
-          <Grid item md={12} container justifyContent={"center"}>
-            {accessToken ? (
-              <div>
-                <Logout />
-                <button onClick={fetchBookshelves}>Fetch Bookshelves</button>
-              </div>
-            ) : (
-              <Login onLoginSuccess={onLoginSuccess} />
-            )}
-          </Grid>
-
-          {/* <Grid>
-            <FavouritesPage accessToken={accessToken} />
-          </Grid> */}
-
           <Grid item md={12}>
             <BookResults
               data={data}
               loading={loading}
               page={page}
               setPage={setPage}
+              accessToken={accessToken}
             ></BookResults>
           </Grid>
         </Grid>

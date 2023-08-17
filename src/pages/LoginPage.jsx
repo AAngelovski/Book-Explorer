@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Grid, Typography } from "@mui/material";
 import Login from "../components/Auth/Login";
 
-const LoginPage = ({ onLoginSuccess }) => {
+const LoginPage = () => {
   return (
     <Container
       maxWidth="xl"
@@ -27,7 +27,7 @@ const LoginPage = ({ onLoginSuccess }) => {
         </Typography>
       </Grid>
       <Grid container justifyContent={"center"} paddingTop="100px">
-        <Login onLoginSuccess={onLoginSuccess} />
+        <Login />
       </Grid>
     </Container>
   );

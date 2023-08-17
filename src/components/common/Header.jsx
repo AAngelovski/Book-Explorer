@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import React, { useState, useEffect, useContext } from "react";
+import { Box, Button } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -8,10 +8,18 @@ import SearchIconWrapper from "../Search/SearchIconWrapper";
 import StyledInputBase from "../Search/StyledInputBase";
 import { BookRepository } from "../../repository/BooksRepository";
 import SearchIcon from "@mui/icons-material/Search";
+import Login from "../Auth/Login";
+import Logout from "../Auth/Logout";
+import { UserContext } from "../../contexts/user.context";
+import { TokenContext } from "../../contexts/token.context";
+import { useNavigate } from "react-router-dom";
 
 export default function Header({ data, setData, setLoading, page, setPage }) {
   const [searchValue, setSearchValue] = useState("");
   const [size, setSize] = useState(12);
+  const { user } = useContext(UserContext);
+  const { accessToken } = useContext(TokenContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (searchValue?.length > 3) {
@@ -69,18 +77,40 @@ export default function Header({ data, setData, setLoading, page, setPage }) {
             variant="h6"
             noWrap
             component="div"
+            fontSize={18}
+            fontWeight={300}
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
             Book Collection
           </Typography>
+
           <Typography
             variant="h5"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{ flexGrow: 0, display: { xs: "none", sm: "block" } }}
           >
-            Logged In
+            {user}
           </Typography>
+
+          <Button
+            variant="h1"
+            component="button"
+            color="primary"
+            sx={{
+              fontWeight: "300",
+              fontSize: "18px",
+              flexGrow: 1,
+              display: { xs: "none", sm: "block" },
+            }}
+            onClick={() => {
+              navigate("/user/");
+            }}
+          >
+            My Profile
+          </Button>
+          {accessToken ? <Logout /> : <Login />}
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
