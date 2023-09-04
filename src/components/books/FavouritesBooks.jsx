@@ -16,19 +16,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import { useNavigate } from "react-router-dom";
 import { useFavoritesContext } from "../../contexts/favourites.context";
-import WishlistBooks from "./WishlistBooks";
 const FavouritesBooks = () => {
   const navigate = useNavigate();
-  const { accessToken, setAccessToken } = useContext(TokenContext);
+  const { accessToken } = useContext(TokenContext);
   const { favorites, fetchFavorites, removeFavorite, setFavorites } =
     useFavoritesContext();
-
-  useEffect(() => {
-    const storedAccessToken = localStorage.getItem("accessToken");
-    if (storedAccessToken) {
-      setAccessToken(storedAccessToken);
-    }
-  }, []);
 
   const handleFetchFavorites = () => {
     // Fetch favorites when the "Favourites" button is clicked
@@ -80,7 +72,7 @@ const FavouritesBooks = () => {
                 <IconButton
                   size="small"
                   onClick={() => handleRemove(item?.id)} // Use handleRemove here
-                  aria-label="Remove from Favourites"
+                  title="REMOVE FROM FAVOURITES"
                 >
                   <DeleteIcon fontSize="large" />
                 </IconButton>
@@ -89,7 +81,7 @@ const FavouritesBooks = () => {
                   onClick={() => {
                     navigate(`/book/${item?.id}?source=user`);
                   }}
-                  aria-label="Remove from Favourites"
+                  title="LEARN MORE"
                 >
                   <ReadMoreIcon fontSize="large" />
                 </IconButton>

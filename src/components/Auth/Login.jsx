@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/user.context";
 import { TokenContext } from "../../contexts/token.context";
-const clientId =
-  "445145405690-u115m54j6d5eaedtj79tsmpm0iq520cv.apps.googleusercontent.com";
+const clientId = process.env.REACT_APP_ID;
 
 function Login() {
   const navigate = useNavigate();

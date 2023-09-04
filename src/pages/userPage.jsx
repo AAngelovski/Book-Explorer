@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { TokenContext } from "../contexts/token.context";
 import FavouritesBooks from "../components/books/FavouritesBooks";
@@ -11,8 +11,17 @@ import Toolbar from "@mui/material/Toolbar";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const UserPage = () => {
-  const { accessToken } = useContext(TokenContext);
+  const { accessToken, setAccessToken } = useContext(TokenContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedAccessToken = localStorage.getItem("accessToken");
+    if (storedAccessToken) {
+      setAccessToken(storedAccessToken);
+    } else {
+      navigate("/");
+    }
+  }, []);
 
   const navigateBack = () => {
     navigate(-1);

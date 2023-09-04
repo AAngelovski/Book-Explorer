@@ -19,16 +19,9 @@ import { useWishlistContext } from "../../contexts/wishlist.context";
 
 const WishlistBooks = () => {
   const navigate = useNavigate();
-  const { accessToken, setAccessToken } = useContext(TokenContext);
+  const { accessToken } = useContext(TokenContext);
   const { wishlist, fetchWishlist, setWishlist, removeWishlist } =
     useWishlistContext();
-
-  useEffect(() => {
-    const storedAccessToken = localStorage.getItem("accessToken");
-    if (storedAccessToken) {
-      setAccessToken(storedAccessToken);
-    }
-  }, []);
 
   const handleFetchWishlist = () => {
     // Fetch wishlist when the "Wishlist" button is clicked
@@ -81,7 +74,7 @@ const WishlistBooks = () => {
                 <IconButton
                   size="small"
                   onClick={() => handleRemove(item?.id)} // Use handleRemove here
-                  aria-label="Remove from Favourites"
+                  title="REMOVE FROM WISHLIST"
                 >
                   <DeleteIcon fontSize="large" />
                 </IconButton>
@@ -90,7 +83,7 @@ const WishlistBooks = () => {
                   onClick={() => {
                     navigate(`/book/${item?.id}?source=user`);
                   }}
-                  aria-label="Remove from Favourites"
+                  title="LEARN MORE"
                 >
                   <ReadMoreIcon fontSize="large" />
                 </IconButton>

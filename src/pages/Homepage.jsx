@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext } from "react";
+import React, { useState, Fragment, useContext, useEffect } from "react";
 import { Container, Grid } from "@mui/material";
 import Header from "../components/common/Header";
 import BookResults from "../components/books/BookResults";
@@ -12,6 +12,11 @@ const Homepage = () => {
   const { accessToken } = useContext(TokenContext);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/");
+    }
+  }, []);
   return (
     <Fragment>
       <Header

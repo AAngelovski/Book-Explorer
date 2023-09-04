@@ -11,8 +11,8 @@ import {
 import * as React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate } from "react-router-dom";
-import AddToFavoritesButton from "./AddToFavouritesBtn";
-import AddToWishlistButton from "./AddToWishlistBtn";
+import AddToFavorites from "./AddToFavourites";
+import AddToWishlist from "./AddToWishlist";
 
 export default function BookResults({
   data,
@@ -57,7 +57,7 @@ export default function BookResults({
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    {item?.volumeInfo?.title}
+                    {item?.volumeInfo?.title.slice(0, 20)}
                   </Typography>
                   <Typography gutterBottom variant="p" component="div">
                     {item?.volumeInfo?.authors}
@@ -80,14 +80,8 @@ export default function BookResults({
                 </CardActions>
 
                 <CardActions>
-                  <AddToFavoritesButton
-                    bookId={item?.id}
-                    accessToken={accessToken}
-                  />
-                  <AddToWishlistButton
-                    bookId={item?.id}
-                    accessToken={accessToken}
-                  />
+                  <AddToFavorites bookId={item?.id} accessToken={accessToken} />
+                  <AddToWishlist bookId={item?.id} accessToken={accessToken} />
                 </CardActions>
               </Card>
             </Grid>

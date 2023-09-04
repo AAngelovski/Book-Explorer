@@ -6,8 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import UserPage from "./pages/userPage";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { gapi } from "gapi-script";
-const clientId =
-  "445145405690-u115m54j6d5eaedtj79tsmpm0iq520cv.apps.googleusercontent.com";
+const clientId = process.env.REACT_APP_ID;
 
 const App = () => {
   const theme = createTheme({

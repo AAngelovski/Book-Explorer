@@ -18,8 +18,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import AddToFavoritesButton from "../components/books/AddToFavouritesBtn";
-import AddToWishlistButton from "../components/books/AddToWishlistBtn";
+import AddToFavorites from "../components/books/AddToFavourites";
+import AddToWishlist from "../components/books/AddToWishlist";
 
 const BookDetailsPage = () => {
   const { bookId } = useParams();
@@ -33,6 +33,7 @@ const BookDetailsPage = () => {
   };
 
   useEffect(() => {
+    if (!accessToken) navigate("/");
     if (bookId) {
       BookRepository.getBookById(bookId)
         .then((res) => {
@@ -143,14 +144,8 @@ const BookDetailsPage = () => {
           <Grid item md={12}>
             <Card>
               <CardActions>
-                <AddToFavoritesButton
-                  bookId={bookId}
-                  accessToken={accessToken}
-                />
-                <AddToWishlistButton
-                  bookId={bookId}
-                  accessToken={accessToken}
-                />
+                <AddToFavorites bookId={bookId} accessToken={accessToken} />
+                <AddToWishlist bookId={bookId} accessToken={accessToken} />
               </CardActions>
               <CardContent>
                 <Typography gutterBottom variant="h3" component="div">
