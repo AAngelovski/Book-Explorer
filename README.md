@@ -11,3 +11,8 @@ Add to Bookshelf: Add books to your personal bookshelf for easy access and track
 Manage Bookshelf: Edit, remove, or organize your bookshelf as you see fit.
 Responsive Design: Enjoy a seamless experience on both desktop and mobile devices.
 
+**Testin**
+To access test user details for this application, please send an email to angelovskiandrej@hotmail.com with the subject "Access Request." 
+I will provide you with the necessary credentials after verifying your request. 
+
+
